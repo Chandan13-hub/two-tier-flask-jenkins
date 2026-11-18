@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Manager</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 850px;
+      margin: 50px auto;
+      padding: 0 20px;
+      background: #f4f6f8;
+    }
+
+    h1 { color: #183153; }
+
+    form.add-form {
+      display: flex;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    input, button {
+      padding: 12px;
+      font-size: 15px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      color: white;
+      background: #1769aa;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .delete {
+      background: #b42318;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Employee Manager</h1>
+  <p>Flask + MySQL | Docker + Jenkins | AWS EC2</p>
+
+  <form class="add-form" method="post" action="/employees">
+    <input
+      name="name"
+      placeholder="Employee name"
+      maxlength="100"
+      required
+    >
+
+    <input
+      name="role"
+      placeholder="Employee role"
+      maxlength="100"
+      required
+    >
+
+    <button type="submit">Add employee</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for employee in employees %}
+      <tr>
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.role }}</td>
+        <td>
+          <form
+            method="post"
+            action="/employees/{{ employee.id }}/delete"
+          >
+            <button class="delete" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4">No employees added yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
