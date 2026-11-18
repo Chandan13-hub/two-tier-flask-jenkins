@@ -14,7 +14,7 @@ class ApplicationTests(unittest.TestCase):
     def test_health(self):
         response = self.client.get("/health")
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json["status"], "healthy")
 
     def test_reject_empty_employee(self):
